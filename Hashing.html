@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hashing Techniques Visualizer</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+            text-align: center;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px #ccc;
+        }
+
+        h1 {
+            color: #4438c8;
+        }
+
+        .formula {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px;
+        }
+
+        input {
+            padding: 12px;
+            width: 180px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+        }
+
+        button {
+            padding: 12px 22px;
+            margin-left: 10px;
+            background: #5046df;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #382fb5;
+        }
+
+        table {
+            margin: 30px auto;
+            border-collapse: collapse;
+        }
+
+        td {
+            width: 90px;
+            height: 70px;
+            border: 2px solid #ddd;
+            font-size: 18px;
+        }
+
+        .active {
+            background: #e2e0ff;
+            color: #4438c8;
+            font-weight: bold;
+            border: 3px solid #655bd8;
+        }
+
+        #result {
+            font-size: 21px;
+            color: #555;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Hashing Techniques Visualizer</h1>
+
+    <p>
+        Enter a key to calculate its hash-table index.
+    </p>
+
+    <div class="formula">
+        h(k) = k mod 10
+    </div>
+
+    <input type="number" id="key" value="27">
+
+    <button onclick="calculateHash()">
+        Calculate
+    </button>
+
+    <table id="hashTable"></table>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+
+function calculateHash() {
+
+    let key = Number(document.getElementById("key").value);
+
+    if (isNaN(key)) {
+        alert("Please enter a number");
+        return;
+    }
+
+    let index = ((key % 10) + 10) % 10;
+
+    let table = "<tr>";
+
+    for (let i = 0; i < 10; i++) {
+
+        if (i == 5) {
+            table += "</tr><tr>";
+        }
+
+        if (i == index) {
+            table += `
+                <td class="active">
+                    Index: ${i}<br>
+                    Key: ${key}
+                </td>`;
+        } else {
+            table += `
+                <td>
+                    Index: ${i}<br>
+                    -
+                </td>`;
+        }
+    }
+
+    table += "</tr>";
+
+    document.getElementById("hashTable").innerHTML = table;
+
+    document.getElementById("result").innerHTML =
+        "Hash Calculation: <b>" +
+        key + " mod 10 = " + index +
+        "</b><br>Key " + key +
+        " is stored at index " + index + ".";
+
+}
+
+calculateHash();
+
+</script>
+
+</body>
+</html>
